@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+">
+
+    <bean id="button11" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="📜公司简介"/>
+        <property name="type" value="click"/>
+        <property name="key" value="11"/>
+    </bean>
+    <bean id="button12" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="🏠公司主页"/>
+        <property name="type" value="view"/>
+        <property name="url" value="http://www.baidu.com"/>
+    </bean>
+    <bean id="button15" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="📞联系我们"/>
+        <property name="type" value="click"/>
+        <property name="key" value="15"/>
+    </bean>
+
+    <bean id="button21" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="SF6气体密度无线远程监测预警系统"/>
+        <property name="type" value="click"/>
+        <property name="key" value="21"/>
+    </bean>
+    <bean id="button22" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="沉降仪"/>
+        <property name="type" value="click"/>
+        <property name="key" value="22"/>
+    </bean>
+    <bean id="button23" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="无线旋桨流速仪智能测控系统"/>
+        <property name="type" value="click"/>
+        <property name="key" value="23"/>
+    </bean>
+
+    <bean id="button31" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="百度"/>
+        <property name="type" value="click"/>
+        <property name="key" value="31"/>
+    </bean>
+    <bean id="button32" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="图文"/>
+        <property name="type" value="click"/>
+        <property name="key" value="32"/>
+    </bean>
+
+    <bean id="button33" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="🏢项目工程"/>
+        <property name="type" value="view"/>
+        <property name="url" value="http://1ec88add.ngrok.io/pro/join.action"/>
+    </bean>
+
+    <bean id="button34" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="🏢我的工程"/>
+        <property name="type" value="view"/>
+        <property name="url" value="http://1ec88add.ngrok.io/pro/join.action"/>
+    </bean>
+
+    <bean id="mainButton1" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="讯泰科技"/>
+        <property name="sub_button">
+            <array>
+                <ref bean="button11"/>
+                <ref bean="button12"/>
+                <ref bean="button15"/>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="mainButton2" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="产品信息"/>
+        <property name="sub_button">
+            <array>
+                <ref bean="button21"/>
+                <ref bean="button22"/>
+                <ref bean="button23"/>
+            </array>
+        </property>
+    </bean>
+    <bean id="mainButton3" class="com.soecode.wxtools.bean.WxMenu$WxMenuButton">
+        <property name="name" value="更多..."/>
+        <property name="sub_button">
+            <array>
+                <ref bean="button31"/>
+                <ref bean="button32"/>
+                <ref bean="button33"/>
+            </array>
+        </property>
+    </bean>
+
+    <bean id="menu" class="com.soecode.wxtools.bean.WxMenu">
+        <property name="button">
+            <array>
+                <ref bean="mainButton1"/>
+                <ref bean="mainButton2"/>
+                <ref bean="mainButton3"/>
+            </array>
+        </property>
+    </bean>
+
+
+</beans>
