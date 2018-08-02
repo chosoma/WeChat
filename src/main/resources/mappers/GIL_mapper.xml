@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thingtek.gil.dao.GILDao">
+    <select id="findAllNets" resultType="com.thingtek.gil.entity.NetBean">
+        select * from gil.gateway
+    </select>
+    <select id="findAllUnits" resultType="com.thingtek.gil.entity.UnitBean">
+        select * from gil.unit
+    </select>
+    <select id="findAllDatas" resultType="com.thingtek.gil.entity.DataBean">
+        select * from gil.data
+    </select>
+
+    <select id="findByType" resultType="com.thingtek.gil.entity.DataBean">
+        select
+        case when p.place is NULL then '环境温度' ELSE p.place end AS place ,
+        u.xw AS xw ,
+        <if test="unitType != null and unitType == 1">
+            i.den As den , i.pres As pres ,
+        </if>
+        <if test="unitType != null and unitType == 2">
+            i.vari-us.initvari AS vari,
+        </if>
+        <if test="unitType != null and unitType == 3">
+            i.temp AS temp,
+        </if>
+        <if test="unitType != null and unitType == 4">
+            i.hitchvol AS hitchvol,
+        </if>
+        i.BatLv AS batlv,
+        i.date AS date,
+        i.warn AS warn
+        from gil.unit u
+        right join gil.data i on u.type = i.unittype AND u.number = i.unitnumber
+        left join gil.point p ON p.point = u.point
+        left join
+        <if test="unitType != null and unitType == 1">
+            gil.unit_sf6 us on u.number = us.number and u.type = #{unitType}
+        </if>
+        <if test="unitType != null and unitType == 2">
+            gil.unit_vari us on u.number = us.number and u.type = #{unitType}
+        </if>
+        <if test="unitType != null and unitType == 3">
+            gil.unit_temp us on u.number = us.number and u.type = #{unitType}
+        </if>
+        <if test="unitType != null and unitType == 4">
+            gil.unit_hitch us on u.number = us.number and u.type = #{unitType}
+        </if>
+        <where>
+            u.type = #{unitType}
+            <choose>
+                <when test="dateStart != null and dateStart != '' and dateEnd !=null and dateEnd != ''">
+                    and i.date BETWEEN #{dateStart} and #{dateEnd}
+                </when>
+                <when test="dateStart != null and dateStart != ''">
+                    and i.date &gt;= #{dateStart}
+                </when>
+                <when test="dateEnd != null and dateEnd != ''">
+                    and i.date &lt;= #{dateEnd}
+                </when>
+            </choose>
+        </where>
+        order by date desc
+        limit #{pageStart},#{pageSize}
+    </select>
+
+
+    <select id="findWarn" resultType="com.thingtek.gil.entity.WarnBean">
+        select
+        p.place,
+        w.xw,
+        w.info,
+        w.date,
+        case handle when 0 then '未处理' when 1 then '已处理' end as handle
+        from gil.warn w
+        left join gil.point p on p.point = w.point
+        <where>
+            <choose>
+                <when test="dateStart != null and dateStart != '' and dateEnd !=null and dateEnd != ''">
+                    and w.date BETWEEN #{dateStart} and #{dateEnd}
+                </when>
+                <when test="dateStart != null and dateStart != ''">
+                    and w.date &gt;= #{dateStart}
+                </when>
+                <when test="dateEnd != null and dateEnd != ''">
+                    and w.date &lt;= #{dateEnd}
+                </when>
+            </choose>
+        </where>
+        order by date desc
+        limit #{pageStart},#{pageSize}
+    </select>
+
+</mapper>

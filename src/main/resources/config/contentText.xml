@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+">
+    <bean id="contentText" class="com.thingtek.wechat.content.ContentText">
+
+        <property name="onClickMenuEvent" value=""/>
+        <property name="onLocationEvent" value=""/>
+        <property name="onLocationSelectEvent" value=""/>
+        <property name="onMassSendJobFinishEvent" value=""/>
+        <property name="onPicPhotoOrAlbumnEvent" value=""/>
+        <property name="onPicSysPhotoEvent" value=""/>
+        <property name="onPicWeixinEvent" value=""/>
+        <property name="onReceiveImage" value=""/>
+        <property name="onReceiveLink" value=""/>
+        <property name="onReceiveLocation" value=""/>
+        <property name="onReceiveShortvideo" value=""/>
+        <property name="onReceiveText" value="您好!"/>
+        <property name="onReceiveVideo" value=""/>
+        <property name="onReceiveVoice" value=""/>
+        <property name="onScanCodeWaitMsgEvent" value=""/>
+        <property name="onScanWithSubscribedEvent" value=""/>
+        <property name="onScanWithSubscribeEvent" value=""/>
+        <property name="onSubscriptionEvent" value="您好！感谢您关注讯泰科技！"/>
+        <property name="onUnSubscriptionEvent" value=""/>
+        <property name="onViewMenuEvent" value=""/>
+
+        <property name="wechatId" value="gh_2cfaae469b51"/>
+    </bean>
+
+    <bean id="urlContext" class=" com.thingtek.wechat.content.UrlContext">
+        <property name="url_snsapi_base"
+                  value="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx94b020c7b2e2384c&amp;redirect_uri=https%3A%2F%2Fe4a92057.ngrok.io%2Foauth.action&amp;response_type=code&amp;scope=snsapi_base&amp;state=1#wechat_redirect"/>
+        <property name="url_snsapi_userinfo"
+                  value="https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx94b020c7b2e2384c&amp;redirect_uri=http%3A%2F%2Fe4a92057.ngrok.io%2Foauth.action&amp;response_type=code&amp;scope=snsapi_userinfo&amp;state=1#wechat_redirect"/>
+    </bean>
+</beans>

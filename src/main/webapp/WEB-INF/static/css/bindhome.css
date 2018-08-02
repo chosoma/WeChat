@@ -1,0 +1,38 @@
+.table td {
+	vertical-align: middle;
+	text-align: center;
+}
+
+.tablediv {
+	width: 100%;
+}
+
+.pro {
+	width: 100%;
+	position: relative;
+	height: 40px;
+	line-height: 40px;
+	padding-left: 20px;
+}
+
+.pro>.add {
+	position: absolute;
+	right: 20px;
+	background-color: #D2FFCA;
+}
+
+td>.del {
+	background-color: #FFC4C4;
+}
+
+td>.edit {
+	background-color: #F7CD90;
+}
+
+body {
+	background-color: #FAFAFA;
+}
+
+header {
+	text-align: center;
+}

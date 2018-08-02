@@ -1,0 +1,105 @@
+header {
+    background-color: #18B4FE;
+    text-align: center;
+    font-size: 15px;
+    height: 40px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    line-height: 44px;
+    color: #fff;
+    /*background: -webkit-linear-gradient(top,rgba(215,75,40,1),rgba(215,75,40,0.8));*/
+    /*z-index: 9999;*/
+    /*border-bottom: 1px solid rgba(215,75,40,0.8);*/
+    /*-ms-touch-action: none;*/
+}
+
+.thead {
+    background-color: #00DDBB;
+}
+
+body .table td {
+    font-size: 10px;
+}
+
+.footer {
+    width: 100%;
+    height: 40px;
+    /* footer的高度一定要是固定值*/
+    position: fixed;
+    bottom: 0px;
+    /*left: 0px;*/
+    text-align: center;
+    /*line-height: 40px;*/
+    background: #ffffff;
+    font-size: 15px;
+}
+
+.footer div > ul > li {
+    /*background-color: #49AFCD;*/
+    width: 20%;
+    line-height: 40px;
+    padding: 0px;
+    margin: 0px;
+    /*border: solid 1px;*/
+}
+
+.dateSelect,.dateSelect tr,.mui-btn-block {
+    margin: 0;
+    padding: 0;
+}
+
+ {
+    margin: 0;
+    padding: 0;
+}
+
+/*.footer p {
+	padding-bottom:9px;
+}*/
+
+.footer .active {
+    /*width: 34%;*/
+    border-bottom: 1px solid #18B4FE;
+    color: #18B4FE;
+}
+
+.nav {
+    width: 100%;
+}
+
+/*列表*/
+
+body .mescroll {
+    position: fixed;
+    bottom: 40px;
+    top: 40px;
+    height: auto;
+}
+
+/*展示上拉加载的数据列表*/
+
+/*.data-list li {
+	position: relative;
+	padding: 10px 8px 10px 120px;
+	border-bottom: 1px solid #eee;
+}
+
+.data-list .pd-name {
+	font-size: 16px;
+	line-height: 20px;
+	height: 40px;
+	overflow: hidden;
+}
+
+.data-list .pd-price {
+	margin-top: 8px;
+	color: red;
+}
+
+.data-list .pd-sold {
+	font-size: 12px;
+	margin-top: 8px;
+	color: gray;
+}*/

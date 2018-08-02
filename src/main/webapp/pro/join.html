@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>项目工程展示</title>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link href="../css/mui.min.css" rel="stylesheet"/>
+</head>
+
+<body>
+<script src="../js/mui.min.js"></script>
+<script type="text/javascript">
+    mui.init();
+    mui.prompt("请输入cd-key秘钥", "cd-key", "项目工程展示", ["确认"], function (e) {
+        console.log(e.value);
+        mui.ajax("join.html", {
+            data: {
+                cd_key: e.value
+            },
+            dataType: 'html', //服务器返回数据格式， xml / html / script / text /json
+            type: 'post', //HTTP请求类型
+            timeout: 10000, //超时时间设置为10秒；
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            success: function (data) {
+                //服务器返回响应，根据响应结果，分析是否登录成功；
+                mui.close();
+            },
+            error: function (xhr, type, errorThrown) {
+                //异常处理；
+                console.log(type);
+            }
+        });
+    });
+</script>
+</body>
+
+</html>

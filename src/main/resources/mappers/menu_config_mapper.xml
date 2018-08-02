@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thingtek.wechat.menu.dao.MenuConfigDao">
+
+
+    <select id="findAllMenuConfig" resultType="com.thingtek.wechat.menu.entity.MenuConfig">
+        SELECT * FROM wechat.menu_config
+    </select>
+    <select id="findAllArticlesById" resultType="com.thingtek.wechat.menu.entity.Article">
+        SELECT * FROM wechat.articles
+        <if test="article_id!=null and article_id!=''">
+            <where>
+                article_id = #{article_id}
+            </where>
+        </if>
+        ORDER BY num ASC
+    </select>
+
+    <insert id="saveMenuConfig" parameterType="com.thingtek.wechat.menu.entity.MenuConfig">
+        INSERT INTO wechat.menu_config (
+        menu_key,
+        message_type,
+        content,
+        media_id,
+        file_url,
+        article_id
+         ) VALUES (
+        #{menu_key},
+        #{message_type},
+        #{content},
+        #{media_id},
+        #{file_url},
+        #{article_id}
+        )
+
+    </insert>
+
+    <insert id="saveArticle" parameterType="com.thingtek.wechat.menu.entity.Article">
+        INSERT INTO wechat.articles (
+        article_Id,
+        num,
+        title,
+        pic_url,
+        url,
+        description
+        )
+        VALUES (
+        #{article_id},
+        #{num},
+        #{title},
+        #{pic_url},
+        #{url},
+        #{description}
+        )
+
+
+    </insert>
+
+</mapper>

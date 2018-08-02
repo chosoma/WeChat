@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thingtek.user.dao.UserDao">
+
+    <insert id="follow" parameterType="com.thingtek.user.entity.UserBean">
+        INSERT INTO wechat.user
+        (
+        user_id,
+        follow_time,
+        follow_state
+        )
+        VALUES
+        <foreach collection="list" item="user" separator="),(" open="(" close=")">
+            #{user.user_id},
+            #{user.follow_time},
+            #{user.follow_state}
+        </foreach>
+
+    </insert>
+
+
+    <insert id="saveBind" parameterType="com.thingtek.user.entity.UserBean">
+        INSERT INTO wechat.user_bind
+        (
+        user_id,
+        pro_name,
+        subjective
+        )
+        VALUES
+        <foreach collection="list" item="user" separator="),(" open="(" close=")">
+            #{user.user_id},
+            #{user.pro_name},
+            #{user.subjective}
+        </foreach>
+    </insert>
+
+
+    <select id="findUserByProName"
+            resultType="com.thingtek.user.entity.UserBean"
+            parameterType="com.thingtek.user.entity.UserBean">
+        SELECT * FROM wechat.user_bind ubind
+        <if test=" pro_name != null and pro_name != '' ">
+            <where>
+                ubind.pro_name = #{pro_name}
+            </where>
+        </if>
+    </select>
+
+    <select id="findUserByUserId"
+            resultType="com.thingtek.user.entity.UserBean"
+            parameterType="com.thingtek.user.entity.UserBean">
+        SELECT * FROM wechat.user u
+        LEFT JOIN wechat.user_bind ubind ON u.user_id = ubind.user_id
+        <where>
+            <if test=" user_id != null and user_id !='' ">
+                u.user_id = #{user_id} and
+            </if>
+            u.follow_time in (
+            SELECT MAX(follow_time) FROM wechat.user wu
+            GROUP BY wu.user_id,ubind.pro_name
+            )
+        </where>
+    </select>
+
+
+    <update id="updateBind" parameterType="com.thingtek.user.entity.UserBean">
+        <if test="subjective != null and user_id != null and user_id!= '' and pro_name != null and pro_name != '' ">
+            UPDATE wechat.user_bind ubind
+            SET ubind.subjective = #{subjective}
+            <where>
+                ubind.user_id = #{user_id} AND ubind.pro_name = #{pro_name}
+            </where>
+        </if>
+    </update>
+
+    <delete id="delBind" parameterType="com.thingtek.user.entity.UserBean">
+        <if test="user_id!=null and user_id!='' and pro_name !=null and pro_name !=''">
+            DELETE FROM user_bind ubind
+            <where>
+                ubind.user_id = #{user_id} and ubind.pro_name = #{pro_name}
+            </where>
+        </if>
+    </delete>
+
+    <insert id="saveDebind" parameterType="com.thingtek.user.entity.UserBean">
+        INSERT INTO wechat.user_debind
+        (
+        user_id,
+        pro_name
+        )
+        VALUES
+        <foreach collection="list" item="user" separator="),(" open="(" close=")">
+            #{user.user_id},
+            #{user.pro_name}
+        </foreach>
+    </insert>
+
+
+</mapper>
