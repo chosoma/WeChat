@@ -30,21 +30,30 @@ public class BindController {
     @RequestMapping("/bind.action")
     public void userbind() {
 
-
     }
 
+
+    /*
+            添加绑定工程
+     */
     @RequestMapping("/addbind.action")
-    public void addbind(Map<String,Object> map) {
+    public void addbind(Map<String, Object> map) {
 
     }
 
+    /*
+            修改绑定工程
+     */
     @RequestMapping("/editbind.action")
-    public void editbind(Map<String,Object> map) {
+    public void editbind(Map<String, Object> map) {
 
     }
 
+    /*
+            删除绑定工程
+     */
     @RequestMapping("/delbind.action")
-    public void delbind(Map<String,Object> map) {
+    public void delbind(Map<String, Object> map) {
 
     }
 
