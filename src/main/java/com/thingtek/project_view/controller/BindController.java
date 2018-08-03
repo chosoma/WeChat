@@ -1,6 +1,7 @@
 package com.thingtek.project_view.controller;
 
 import com.soecode.wxtools.bean.WxUserList;
+import com.thingtek.base.controller.BaseController;
 import com.thingtek.user.entity.UserBean;
 import com.thingtek.user.service.UserService;
 import com.thingtek.wechat.service.WxService;
@@ -8,11 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @Controller("/pro")
-public class BindController {
+public class BindController extends BaseController {
 
     @Resource
     private WxService wxService;
@@ -25,6 +27,10 @@ public class BindController {
 
         WxUserList.WxUser wxuser = wxService.getUserInfoByCode(code);
         List<UserBean> userList = userService.findUserByUserId(wxuser.getOpenid());
+
+
+
+
     }
 
     @RequestMapping("/bind.action")
@@ -38,6 +44,11 @@ public class BindController {
      */
     @RequestMapping("/addbind.action")
     public void addbind(Map<String, Object> map) {
+        UserBean userBean = userService.resouceUser(map);
+        userBean.setBind_time(new Date());
+        userService.saveBind(userBean);
+
+
 
     }
 
@@ -46,7 +57,8 @@ public class BindController {
      */
     @RequestMapping("/editbind.action")
     public void editbind(Map<String, Object> map) {
-
+        UserBean userBean = userService.resouceUser(map);
+        userBean.setSubjective(true);
     }
 
     /*
@@ -56,6 +68,9 @@ public class BindController {
     public void delbind(Map<String, Object> map) {
 
     }
+
+
+
 
 
 }

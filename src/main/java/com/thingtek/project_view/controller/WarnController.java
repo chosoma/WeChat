@@ -2,6 +2,7 @@ package com.thingtek.project_view.controller;
 
 
 import com.soecode.wxtools.exception.WxErrorException;
+import com.thingtek.base.controller.BaseController;
 import com.thingtek.project_view.entity.WarnBean;
 import com.thingtek.user.entity.UserBean;
 import com.thingtek.user.service.UserService;
@@ -15,7 +16,7 @@ import javax.annotation.Resource;
 import java.util.List;
 
 @Controller
-public class WarnController {
+public class WarnController extends BaseController {
 
     @Resource
     private UserService userService;

@@ -1,4 +1,4 @@
 package com.thingtek.base.dao;
 
-public class BaseDao {
+public interface BaseDao {
 }

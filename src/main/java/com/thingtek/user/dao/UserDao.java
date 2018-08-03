@@ -1,12 +1,13 @@
 package com.thingtek.user.dao;
 
 
+import com.thingtek.base.dao.BaseDao;
 import com.thingtek.user.entity.UserBean;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface UserDao {
+public interface UserDao extends BaseDao{
 
 
     boolean follow(List<UserBean> userBeans) throws SQLException;
@@ -17,9 +18,10 @@ public interface UserDao {
 
     List<UserBean> findUserByProName(UserBean userBean) throws SQLException;
 
-    boolean saveDeBind(List<UserBean> userBeans)throws SQLException;
+    boolean saveDeBind(List<UserBean> userBeans) throws SQLException;
 
-    boolean delBind(UserBean userBean) throws SQLException;
+    boolean deleteBind(UserBean userBean) throws SQLException;
 
+    boolean updateBind(UserBean userBean) throws SQLException;
 
 }

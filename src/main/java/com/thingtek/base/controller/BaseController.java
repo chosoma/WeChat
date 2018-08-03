@@ -1,4 +1,4 @@
 package com.thingtek.base.controller;
 
-public class BaseController {
+public abstract class BaseController {
 }

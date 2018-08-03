@@ -10,6 +10,7 @@ import com.soecode.wxtools.handler.DemoHandler;
 import com.soecode.wxtools.interceptor.DemoInterceptor;
 import com.soecode.wxtools.matcher.DemoMatcher;
 import com.soecode.wxtools.util.xml.XStreamTransformer;
+import com.thingtek.base.controller.BaseController;
 import com.thingtek.wechat.handler.MessageHandler;
 import com.thingtek.wechat.interceptor.MessageInterceptor;
 import com.thingtek.wechat.matcher.MessageMatcher;
@@ -24,7 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.PrintWriter;
 
 @Controller
-public class WxController {
+public class WxController extends BaseController {
 
     @Resource
     private WxService service;

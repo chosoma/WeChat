@@ -1,12 +1,13 @@
 package com.thingtek.company.dao;
 
 
+import com.thingtek.base.dao.BaseDao;
 import com.thingtek.company.entity.CompanyBean;
 
 import java.sql.SQLException;
 import java.util.List;
 
-public interface CompanyDao {
+public interface CompanyDao extends BaseDao {
 
     CompanyBean findCompanyByCdkey(String pro_cdkey) throws SQLException;
 

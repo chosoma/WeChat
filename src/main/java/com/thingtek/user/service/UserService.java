@@ -11,6 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+
+
 
 @Service
 public class UserService extends BaseService {
@@ -70,5 +73,21 @@ public class UserService extends BaseService {
             return userBeans.get(0);
         }
         return null;
+    }
+
+    public UserBean resouceUser(Map<String, Object> map) {
+        UserBean userBean = new UserBean();
+        userBean.setUser_id((String) map.get("user_id"));
+        userBean.setPro_name((String) map.get("pro_name"));
+        return userBean;
+    }
+
+    public boolean updateBind(UserBean userBean) {
+        try {
+            return dao.updateBind(userBean);
+        } catch (SQLException e) {
+            log(e);
+            return false;
+        }
     }
 }

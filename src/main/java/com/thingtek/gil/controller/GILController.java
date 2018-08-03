@@ -1,6 +1,7 @@
 package com.thingtek.gil.controller;
 
 
+import com.thingtek.base.controller.BaseController;
 import com.thingtek.gil.entity.NetBean;
 import com.thingtek.gil.service.GILService;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/sf6")
-public class GILController {
+public class GILController extends BaseController{
 
     @Resource
     private GILService service;

@@ -1,6 +1,7 @@
 package com.thingtek.project_view.controller;
 
 
+import com.thingtek.base.controller.BaseController;
 import com.thingtek.project_view.entity.CueMessage;
 import com.thingtek.company.entity.CompanyBean;
 import com.thingtek.company.service.CompanyService;
@@ -22,7 +23,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/pro")
-public class ProjectController {
+public class ProjectController extends BaseController{
 
     @Resource
     private CompanyService companyService;
