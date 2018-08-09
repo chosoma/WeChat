@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface CompanyDao extends BaseDao {
 
-    CompanyBean findCompanyByCdkey(String pro_cdkey) throws SQLException;
-
     List<CompanyBean> findCompanyByCompanyname(String companyname) throws SQLException;// 获取用户所有工程  不建议使用
+
+    CompanyBean findCompanyByCdkey(String pro_cdkey) throws SQLException;
 
     CompanyBean findCompanyByProname(String pro_name) throws SQLException;
 

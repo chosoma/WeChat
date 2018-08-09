@@ -32,7 +32,6 @@ public class MessageMatcher implements WxMessageMatcher {
                     case WxConsts.EVT_SUBSCRIBE:
                         UserBean userBean = new UserBean();
                         userBean.setUser_id(message.getFromUserName());
-                        userBean.setFollow_time(new Date(message.getCreateTime()));
                         userBean.setFollow_state(flag);
                         userService.follow(userBean);
                         break;

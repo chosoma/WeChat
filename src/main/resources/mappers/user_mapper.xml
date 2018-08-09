@@ -4,67 +4,128 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.thingtek.user.dao.UserDao">
 
+    <!-- 关注/取关 -->
     <insert id="follow" parameterType="com.thingtek.user.entity.UserBean">
-        INSERT INTO wechat.user
-        (
-        user_id,
-        follow_time,
-        follow_state
-        )
-        VALUES
-        <foreach collection="list" item="user" separator="),(" open="(" close=")">
-            #{user.user_id},
-            #{user.follow_time},
-            #{user.follow_state}
-        </foreach>
-
+        <if test=" user_id != null and user_id != '' ">
+            INSERT INTO wechat.user_follow
+            (
+            user_id,
+            follow_state,
+            <choose>
+                <when test="follow_state != null and follow_state == 1">
+                    follow_time
+                </when>
+                <otherwise>
+                    unfollow_time
+                </otherwise>
+            </choose>
+            )
+            VALUES
+            (
+            #{user_id},
+            <choose>
+                <when test="follow_state != null">
+                    #{follow_state},
+                </when>
+                <otherwise>
+                    0,
+                </otherwise>
+            </choose>
+            NOW()
+            )
+            ON DUPLICATE KEY UPDATE
+            <choose>
+                <when test="follow_state != null and follow_state == 1">
+                    follow_time = NOW(), follow_state = 1
+                </when>
+                <otherwise>
+                    unfollow_time = NOW(), follow_state = 0
+                </otherwise>
+            </choose>
+        </if>
     </insert>
 
-
+    <!-- 添加绑定工程/取消绑定工程 -->
     <insert id="saveBind" parameterType="com.thingtek.user.entity.UserBean">
-        INSERT INTO wechat.user_bind
-        (
-        user_id,
-        pro_name,
-        subjective
-        )
-        VALUES
-        <foreach collection="list" item="user" separator="),(" open="(" close=")">
-            #{user.user_id},
-            #{user.pro_name},
-            #{user.subjective}
-        </foreach>
+        <if test=" user_id != null and user_id != '' and pro_name != null and pro_name != '' ">
+            INSERT INTO wechat.user_bind
+            (
+            user_id,
+            pro_name,
+            bind_state,
+            <choose>
+                <when test="bind_state != null and bind_state == 1">
+                    bind_time
+                </when>
+                <otherwise>
+                    debind_time
+                </otherwise>
+            </choose>
+            )
+            VALUES
+            (
+            #{user_id},
+            #{pro_name},
+            <choose>
+                <when test="bind_state != null">
+                    #{bind_state},
+                </when>
+                <otherwise>
+                    0,
+                </otherwise>
+            </choose>
+            NOW()
+            )
+            ON DUPLICATE KEY UPDATE
+            <choose>
+                <when test="bind_state != null and bind_state == 1">
+                    bind_time = NOW(), bind_count = bind_count+1, bind_state = 1
+                </when>
+                <otherwise>
+                    debind_time = NOW(), debind_count = debind_count+1, bind_state = 0
+                </otherwise>
+            </choose>
+        </if>
     </insert>
-
 
     <select id="findUserByProName"
             resultType="com.thingtek.user.entity.UserBean"
             parameterType="com.thingtek.user.entity.UserBean">
         SELECT * FROM wechat.user_bind ubind
-        <if test=" pro_name != null and pro_name != '' ">
-            <where>
-                ubind.pro_name = #{pro_name}
-            </where>
-        </if>
+        LEFT JOIN whchat.user_follow ufollow ON ufollow.user_id = ubind.user_id
+        <where>
+            <if test=" pro_name != null and pro_name != '' ">
+                ubind.pro_name = #{pro_name} AND
+            </if>
+            ubind.bind_state = 1
+        </where>
     </select>
 
     <select id="findUserByUserId"
             resultType="com.thingtek.user.entity.UserBean"
             parameterType="com.thingtek.user.entity.UserBean">
-        SELECT * FROM wechat.user u
-        LEFT JOIN wechat.user_bind ubind ON u.user_id = ubind.user_id
+        SELECT * FROM wechat.user_follow ufollow
+        LEFT JOIN wechat.user_bind ubind ON ufollow.user_id = ubind.user_id
         <where>
             <if test=" user_id != null and user_id !='' ">
-                u.user_id = #{user_id} and
+                ufollow.user_id = #{user_id} and
             </if>
-            u.follow_time in (
-            SELECT MAX(follow_time) FROM wechat.user wu
-            GROUP BY wu.user_id,ubind.pro_name
-            )
+            ufollow.follow_state = 1 AND ubind.bind_state = 1
         </where>
     </select>
 
+    <!-- 初始化 -->
+    <update id="reinitBind" parameterType="com.thingtek.user.entity.UserBean">
+        <if test=" user_id != null and user_id!= '' ">
+            UPDATE wechat.user_bind ubind
+            SET ubind.subjective = 0
+            <where>
+                ubind.user_id = #{user_id}
+            </where>
+        </if>
+    </update>
 
+    <!-- 更改主工程 -->
     <update id="updateBind" parameterType="com.thingtek.user.entity.UserBean">
         <if test="subjective != null and user_id != null and user_id!= '' and pro_name != null and pro_name != '' ">
             UPDATE wechat.user_bind ubind
@@ -74,28 +135,6 @@
             </where>
         </if>
     </update>
-
-    <delete id="delBind" parameterType="com.thingtek.user.entity.UserBean">
-        <if test="user_id!=null and user_id!='' and pro_name !=null and pro_name !=''">
-            DELETE FROM user_bind ubind
-            <where>
-                ubind.user_id = #{user_id} and ubind.pro_name = #{pro_name}
-            </where>
-        </if>
-    </delete>
-
-    <insert id="saveDebind" parameterType="com.thingtek.user.entity.UserBean">
-        INSERT INTO wechat.user_debind
-        (
-        user_id,
-        pro_name
-        )
-        VALUES
-        <foreach collection="list" item="user" separator="),(" open="(" close=")">
-            #{user.user_id},
-            #{user.pro_name}
-        </foreach>
-    </insert>
 
 
 </mapper>

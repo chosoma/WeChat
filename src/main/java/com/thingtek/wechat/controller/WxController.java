@@ -41,60 +41,73 @@ public class WxController extends BaseController {
     private WxMenu menu;
 
     @RequestMapping(value = "/wx.action", method = RequestMethod.GET)
-    public void wxGet(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        long start = System.currentTimeMillis();
-        PrintWriter out = response.getWriter();
-        String signature = request.getParameter("signature");
-        String timestamp = request.getParameter("timestamp");
-        String nonce = request.getParameter("nonce");
-        String echostr = request.getParameter("echostr");
-        if (service.checkSignature(signature, timestamp, nonce, echostr)) {
-            out.print(echostr);
+    public void wxGet(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            long start = System.currentTimeMillis();
+            PrintWriter out = response.getWriter();
+            String signature = request.getParameter("signature");
+            String timestamp = request.getParameter("timestamp");
+            String nonce = request.getParameter("nonce");
+            String echostr = request.getParameter("echostr");
+            if (service.checkSignature(signature, timestamp, nonce, echostr)) {
+                out.print(echostr);
 //            service.createMenu(menu, false);
+            }
+            long end = System.currentTimeMillis();
+            System.out.println("Token验证耗时:" + (end - start) + "ms");
+        } catch (Exception e) {
+            logException(e);
         }
-        long end = System.currentTimeMillis();
-        System.out.println("Token验证耗时:" + (end - start) + "ms");
     }
 
     @RequestMapping(value = "/wx.action", method = RequestMethod.POST)
-    public void wxPost(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
-        PrintWriter out = response.getWriter();
-        String encrypt_type = request.getParameter("encrypt_type");
-        WxMessageRouter router = new WxMessageRouter(service);
-        System.err.println("encrypt_type:" + encrypt_type);
-        if (encrypt_type != null && "aes".equals(encrypt_type)) {
+    public void wxPost(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            request.setCharacterEncoding("UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            PrintWriter out = response.getWriter();
+            String encrypt_type = request.getParameter("encrypt_type");
+            WxMessageRouter router = new WxMessageRouter(service);
+            System.err.println("encrypt_type:" + encrypt_type);
+            if (encrypt_type != null && "aes".equals(encrypt_type)) {
 //				String signature = request.getParameter("signature");
-            String timestamp = request.getParameter("timestamp");
-            String nonce = request.getParameter("nonce");
-            String msg_signature = request.getParameter("msg_signature");
+                String timestamp = request.getParameter("timestamp");
+                String nonce = request.getParameter("nonce");
+                String msg_signature = request.getParameter("msg_signature");
 
-            WxXmlMessage wx = WxXmlMessage.decryptMsg(request.getInputStream(), WxConfig.getInstance(), timestamp,
-                    nonce, msg_signature);
-            System.out.println("Message：\n " + wx.toString());
-            router.rule().matcher(new DemoMatcher()).interceptor(new DemoInterceptor()).handler(new DemoHandler()).end();
-            WxXmlOutMessage xmlOutMsg = router.route(wx);
-            if (xmlOutMsg != null) {
-                out.print(WxXmlOutMessage.encryptMsg(WxConfig.getInstance(), xmlOutMsg.toXml(), timestamp, nonce));
+                WxXmlMessage wx = WxXmlMessage.decryptMsg(request.getInputStream(), WxConfig.getInstance(), timestamp,
+                        nonce, msg_signature);
+                System.out.println("Message：\n " + wx.toString());
+                router.rule().matcher(new DemoMatcher()).interceptor(new DemoInterceptor()).handler(new DemoHandler()).end();
+                WxXmlOutMessage xmlOutMsg = router.route(wx);
+                if (xmlOutMsg != null) {
+                    out.print(WxXmlOutMessage.encryptMsg(WxConfig.getInstance(), xmlOutMsg.toXml(), timestamp, nonce));
+                }
+            } else {
+                WxXmlMessage wx = XStreamTransformer.fromXml(WxXmlMessage.class, request.getInputStream());
+                System.out.println("接收的Message：\n " + wx.toString());
+                service.getAccessToken();
+                router.rule().matcher(matcher).interceptor(interceptor).handler(handler).end();
+                WxXmlOutMessage xmlOutMsg = router.route(wx);
+                if (xmlOutMsg != null) {
+                    String xml = xmlOutMsg.toXml();
+                    System.out.println("发送的Message:\n" + xml);
+                    out.print(xmlOutMsg.toXml());
+                }
             }
-        } else {
-            WxXmlMessage wx = XStreamTransformer.fromXml(WxXmlMessage.class, request.getInputStream());
-            System.out.println("接收的Message：\n " + wx.toString());
-            service.getAccessToken();
-            router.rule().matcher(matcher).interceptor(interceptor).handler(handler).end();
-            WxXmlOutMessage xmlOutMsg = router.route(wx);
-            if (xmlOutMsg != null) {
-                String xml = xmlOutMsg.toXml();
-                System.out.println("发送的Message:\n" + xml);
-                out.print(xmlOutMsg.toXml());
-            }
+        } catch (Exception e) {
+            logException(e);
         }
     }
 
     @RequestMapping("/menu.action")
-    public void menu() throws WxErrorException {
-        service.createMenu(menu, false);
+    public String menu() {
+        try {
+            service.createMenu(menu, false);
+        } catch (WxErrorException e) {
+            logException(e);
+        }
+        return "error";
     }
 
 

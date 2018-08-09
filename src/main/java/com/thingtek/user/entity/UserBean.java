@@ -23,5 +23,7 @@ class UserBean {
 
     private Date debind_time;
 
+    private Boolean bind_state;
+
 
 }

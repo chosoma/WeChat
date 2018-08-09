@@ -42,9 +42,9 @@ public class ProjectService extends BaseService {
         Integer type;
         pageBean.setUnitType(type = regNum(strType) ? Integer.parseInt(strType) : 1);
         try {
-            return type == 5 ? gilDao.findWarn(pageBean) : type > 0 && type < 5 ? gilDao.findByType(pageBean) : new ArrayList<BaseBean>();
+            return type == 5 ? gilDao.findWarn(pageBean) : type > 0 && type < 5 ? gilDao.findDataByType(pageBean) : new ArrayList<BaseBean>();
         } catch (SQLException e) {
-            log(e);
+            logException(e);
             return new ArrayList<>();
         }
     }
@@ -57,6 +57,7 @@ public class ProjectService extends BaseService {
     private boolean regNum(String strnum) {
         return strnum != null && strnum.matches("\\d+");
     }
+
 
 
 }

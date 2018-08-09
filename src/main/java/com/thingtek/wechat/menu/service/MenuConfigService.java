@@ -6,12 +6,9 @@ import com.thingtek.base.service.BaseService;
 import com.thingtek.wechat.menu.dao.MenuConfigDao;
 import com.thingtek.wechat.menu.entity.Article;
 import com.thingtek.wechat.menu.entity.MenuConfig;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +28,7 @@ public class MenuConfigService extends BaseService {
         try {
             menuConfigs = dao.findAllMenuConfig();
         } catch (SQLException e) {
-            log(e);
+            logException(e);
             return null;
         }
         for (MenuConfig menuconfig : menuConfigs) {
@@ -50,7 +47,7 @@ public class MenuConfigService extends BaseService {
         try {
             articles = dao.findAllArticlesById(menuconfig);
         } catch (SQLException e) {
-            log(e);
+            logException(e);
         }
         List<WxXmlOutNewsMessage.Item> items = new ArrayList<>();
         for (Article article : articles) {

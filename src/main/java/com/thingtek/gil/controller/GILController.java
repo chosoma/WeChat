@@ -19,11 +19,5 @@ public class GILController extends BaseController{
     @Resource
     private GILService service;
 
-    @RequestMapping("/findAllGateway.action")
-    public List<NetBean> find(HttpServletRequest request, HttpServletResponse response) {
-
-        System.out.println("gil controller");
-        return service.find();
-    }
 
 }

@@ -28,7 +28,7 @@ public class WarnController extends BaseController {
     private TemplateInfoService templateService;
 
     @RequestMapping("/warn.action")
-    public void warn(WarnBean warnBean) {
+    public String warn(WarnBean warnBean) {
         System.out.println("warnings");
         System.out.println(warnBean);
 
@@ -36,7 +36,7 @@ public class WarnController extends BaseController {
 
         TemplateInfo template = templateService.getTemplateInfo(warnBean.getPro_name());
         if (template == null) {
-            return;
+            return "error";
         }
         /*
                 以下应有消息推送
@@ -53,8 +53,7 @@ public class WarnController extends BaseController {
 
         wxService.sendTemplateByOpenid(users, warnBean, template);
 
-
+        return "error";
     }
-
 
 }

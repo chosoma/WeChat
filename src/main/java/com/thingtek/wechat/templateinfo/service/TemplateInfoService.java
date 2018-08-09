@@ -19,10 +19,11 @@ public class TemplateInfoService extends BaseService {
         try {
             return dao.getTemplateInfoByProName(pro_name);
         } catch (SQLException e) {
-            log(e);
+            logException(e);
         }
         return null;
     }
+
 
 
 }

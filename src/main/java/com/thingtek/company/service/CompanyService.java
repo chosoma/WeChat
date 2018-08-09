@@ -18,7 +18,7 @@ public class CompanyService extends BaseService {
         try {
             return companyDao.findCompanyByCdkey(cd_key);
         } catch (SQLException e) {
-            log(e);
+            logException(e);
         }
         return null;
     }
@@ -28,7 +28,7 @@ public class CompanyService extends BaseService {
         try {
             return pro_name != null ? companyDao.findCompanyByProname(pro_name) : null;
         } catch (SQLException e) {
-            log(e);
+            logException(e);
         }
         String pro_cdkey = map.get("pro_cdkey");
         return pro_cdkey != null ? checkCdkey(pro_cdkey) : null;

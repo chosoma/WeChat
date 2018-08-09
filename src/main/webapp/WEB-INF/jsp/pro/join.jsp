@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="basePath" value="${pageContext.request.contextPath}"/>
+<%@ page errorPage="../error.jsp" %>
 <html>
 
 <head>
@@ -6,10 +8,10 @@
     <title>项目工程秘钥</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="css/joinpage.css" rel="stylesheet" media="screen">
-    <link href="css/mescroll.css" rel="stylesheet" media="screen">
-    <link href="css/mui.min.css" rel="stylesheet" media="screen">
+    <link href="${basePath}/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="${basePath}/static/css/joinpage.css" rel="stylesheet" media="screen">
+    <link href="${basePath}/static/css/mescroll.css" rel="stylesheet" media="screen">
+    <link href="${basePath}/static/css/mui.min.css" rel="stylesheet" media="screen">
 
 </head>
 
@@ -23,9 +25,9 @@
         </form>
     </div>
 </center>
-<script src="js/mui.min.js"></script>
+<script src="${basePath}/static/js/mui.min.js"></script>
 <script src="http://code.jquery.com/jquery.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="${basePath}/static/js/bootstrap.min.js"></script>
 <%--<script src="js/joinpage.js"></script>--%>
 <script>
     $(function () {

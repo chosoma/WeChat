@@ -15,11 +15,7 @@ public interface GILDao extends BaseDao{
 
     List<NetBean> findAllNets() throws SQLException;
 
-    List<UnitBean> findAllUnits() throws SQLException;
-
-    List<DataBean> findAllDatas() throws SQLException;
-
-    List<BaseBean> findByType(PageBean pageBean) throws SQLException;
+    List<BaseBean> findDataByType(PageBean pageBean) throws SQLException;
 
     List<BaseBean> findWarn(PageBean pageBean) throws SQLException;
 

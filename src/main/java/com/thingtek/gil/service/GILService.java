@@ -16,14 +16,5 @@ public class GILService extends BaseService {
     @Resource
     private GILDao dao;
 
-    public List<NetBean> find() {
-        try {
-            return dao.findAllNets();
-        } catch (SQLException e) {
-            log(e);
-            return null;
-        }
-    }
-
 
 }

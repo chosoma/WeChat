@@ -1,6 +1,7 @@
-<%@ page import="com.thingtek.company.entity.CompanyBean" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="basePath" value="${pageContext.request.contextPath}"/>
+<%@ page errorPage="../error.jsp" %>
 <html>
 
 <head>
@@ -8,11 +9,11 @@
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap -->
-    <link href="../../static/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="../../static/css/mescroll.css" rel="stylesheet" media="screen">
-    <link href="../../static/css/mui.picker.min.css" rel="stylesheet"/>
-    <link href="../../static/css/mui.min.css" rel="stylesheet"/>
-    <link href="../../static/css/datapage.css" rel="stylesheet" media="screen">
+    <link href="${basePath}/static/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="${basePath}/static/css/mescroll.css" rel="stylesheet" media="screen">
+    <link href="${basePath}/static/css/mui.picker.min.css" rel="stylesheet"/>
+    <link href="${basePath}/static/css/mui.min.css" rel="stylesheet"/>
+    <link href="${basePath}/static/css/datapage.css" rel="stylesheet" media="screen">
     <%--<link rel="stylesheet" href="css/mui.poppicker.css" />--%>
 </head>
 
@@ -132,7 +133,7 @@
         var pdType = 1; //全部
         refreshMenu();
         $(".nav p").click(function () {
-//            console.log("点击下方按钮,类别:" + pdType);
+//            console.logException("点击下方按钮,类别:" + pdType);
             var i = $(this).attr("i");
 
             if (pdType != i) {
@@ -171,10 +172,10 @@
         /*联网加载列表数据  page = {num:1, size:20}; num:当前页 从1开始, size:每页数据条数 */
         function getListData(page) {
             //联网加载数据
-//            console.log("pdType=" + pdType + ", page.num=" + page.num);
+//            console.logException("pdType=" + pdType + ", page.num=" + page.num);
             getListDataFromNet(pdType, page.num, page.size, function (data) {
                 //联网成功的回调,隐藏下拉刷新和上拉加载的状态;
-//                console.log("data.length=" + data.length);
+//                console.logException("data.length=" + data.length);
                 mescroll.endSuccess(data.length); //传参:数据的总数; mescroll会自动判断列表如果无任何数据,则提示空;列表无下一页数据,则提示无更多数据;
                 //设置列表数据
                 setListData(data);
@@ -234,7 +235,7 @@
         /*联网加载列表数据*/
         function getListDataFromNet(pdType, pageNum, pageSize, successCallback, errorCallback) {
 
-//            console.log(pdType + ":" + pageNum + ":" + pageSize);
+//            console.logException(pdType + ":" + pageNum + ":" + pageSize);
 
             //延时一秒,模拟联网
             setTimeout(function () {

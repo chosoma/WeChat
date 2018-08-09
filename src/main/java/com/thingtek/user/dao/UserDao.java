@@ -10,9 +10,9 @@ import java.util.List;
 public interface UserDao extends BaseDao{
 
 
-    boolean follow(List<UserBean> userBeans) throws SQLException;
+    boolean follow(UserBean userBeans) throws SQLException;
 
-    boolean saveBind(List<UserBean> userBeans) throws SQLException;
+    boolean saveBind(UserBean userBeans) throws SQLException;
 
     List<UserBean> findUserByUserId(UserBean userBean) throws SQLException;
 
@@ -23,5 +23,6 @@ public interface UserDao extends BaseDao{
     boolean deleteBind(UserBean userBean) throws SQLException;
 
     boolean updateBind(UserBean userBean) throws SQLException;
-
+    
+    boolean reinitBind(UserBean userBean) throws SQLException;
 }

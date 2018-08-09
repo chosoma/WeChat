@@ -25,10 +25,8 @@ public class WxService extends com.soecode.wxtools.api.WxService {
     public WxUserList.WxUser getUserInfoByCode(String code) {
         try {
             WxOAuth2AccessTokenResult result = this.oauth2ToGetAccessToken(code);
-            WxUserList.WxUser wxuser = this.oauth2ToGetUserInfo(result.getRefresh_token(),
+            return this.oauth2ToGetUserInfo(result.getRefresh_token(),
                     new WxUserList.WxUser.WxUserGet(result.getOpenid(), WxConsts.LANG_CHINA));
-            return wxuser;
-
         } catch (WxErrorException e) {
             return null;
         }

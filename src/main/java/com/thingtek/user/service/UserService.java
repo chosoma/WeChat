@@ -9,10 +9,8 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-
 
 
 @Service
@@ -21,20 +19,20 @@ public class UserService extends BaseService {
     @Resource
     private UserDao dao;
 
-    public boolean follow(UserBean... userBeans) {
+    public boolean follow(UserBean userBean) {
         try {
-            return dao.follow(Arrays.asList(userBeans));
+            return dao.follow(userBean);
         } catch (SQLException e) {
-            log(e);
+            logException(e);
             return false;
         }
     }
 
-    public boolean saveBind(UserBean... userBeans) {
+    public boolean saveBind(UserBean userBean) {
         try {
-            return dao.saveBind(Arrays.asList(userBeans));
+            return dao.saveBind(userBean);
         } catch (SQLException e) {
-            log(e);
+            logException(e);
             return false;
         }
     }
@@ -45,7 +43,7 @@ public class UserService extends BaseService {
         try {
             return dao.findUserByUserId(userBean);
         } catch (SQLException e) {
-            log(e);
+            logException(e);
             return new ArrayList<>();
         }
     }
@@ -56,7 +54,7 @@ public class UserService extends BaseService {
         try {
             return dao.findUserByProName(userBean);
         } catch (SQLException e) {
-            log(e);
+            logException(e);
             return new ArrayList<>();
         }
     }
@@ -75,19 +73,18 @@ public class UserService extends BaseService {
         return null;
     }
 
-    public UserBean resouceUser(Map<String, Object> map) {
-        UserBean userBean = new UserBean();
-        userBean.setUser_id((String) map.get("user_id"));
-        userBean.setPro_name((String) map.get("pro_name"));
-        return userBean;
+    public void resouceUser(UserBean user, Map<String, String> map) {
+//        user.setUser_id(map.get("user_id"));
+        user.setPro_name(map.get("pro_name"));
     }
 
     public boolean updateBind(UserBean userBean) {
         try {
-            return dao.updateBind(userBean);
+            return dao.reinitBind(userBean) && dao.updateBind(userBean);
         } catch (SQLException e) {
-            log(e);
+            logException(e);
             return false;
         }
     }
+
 }

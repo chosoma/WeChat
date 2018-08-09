@@ -12,9 +12,10 @@ public class TESTConstruct {
         warn.setTime(new Date());
         try {
 
-            Class clazz = this.getClass()
+            Class<?> clazz = this.getClass()
                     .getClassLoader()
                     .loadClass("com.thingtek.wechat.templates.Template");
+
             Constructor constructor = clazz.getConstructor(WarnBean.class);
 
             System.out.println(constructor.newInstance(warn));
